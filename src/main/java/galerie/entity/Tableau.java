@@ -23,6 +23,11 @@ public class Tableau {
     @ManyToMany(mappedBy = "oeuvres")
     List<Exposition> accrochages = new LinkedList<>();
     
+    /*
+     * Pour les relations OneToOne (Tableau ⟷ Transaction) on peut choisir également de quel côté on met le "mappedBy". 
+     * Ici ll vaut mieux le mettre dans Tableau, ainsi la clé étrangère sera dans Transaction 
+     * (On met le mappedBy dans la classe qui contient la clé primaire).
+     */
     @OneToOne(mappedBy = "oeuvre")
     private Transaction vendu;    
 }

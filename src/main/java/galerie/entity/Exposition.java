@@ -25,10 +25,18 @@ public class Exposition {
     @Column
     private int duree;
     
-    @ManyToMany
+    /* 
+     * Pour la mise en place de relations Many-to-Many (Tableau ⟷ Exposition), 
+     * il faut préciser une annotation "mappedBy" d'un côté, comme pour une association One-to-Many. 
+     * Une table de jointure sera automatiquement générée.
+     */
+    /* @ManyToMany
     List<Tableau> oeuvres = new LinkedList<>();
+    */
     
-    /*    
+    /*
+     * On peut également préciser davantage les caractéristiques de la table de jointure si nécessaire par l'annotation @JoinTable.
+     */
     @ManyToMany
     @JoinTable(name="expo_tableau",
         joinColumns = 
@@ -37,5 +45,4 @@ public class Exposition {
                 @JoinColumn(name = "tableau_id",  referencedColumnName="id")
     )            
     List<Tableau> oeuvres = new LinkedList<>();
-    */
 }
