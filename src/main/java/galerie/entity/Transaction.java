@@ -19,4 +19,12 @@ public class Transaction {
     @Column
     private float prixVente;
 
+    @OneToOne
+    private Tableau oeuvre;
+    
+    @ManyToOne
+    private Personne client;
+    
+    @ManyToOne
+    private Exposition lieuDeVente;
 }

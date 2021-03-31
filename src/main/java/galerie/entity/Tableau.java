@@ -16,6 +16,7 @@ public class Tableau {
 
     @NonNull
     private String titre;
+    
     private String support;
     private int largeur;
     private int hauteur;
@@ -30,4 +31,7 @@ public class Tableau {
      */
     @OneToOne(mappedBy = "oeuvre")
     private Transaction vendu;    
+    
+    @ManyToOne
+    private Artiste auteur;
 }

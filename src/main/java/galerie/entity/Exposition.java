@@ -30,19 +30,24 @@ public class Exposition {
      * il faut préciser une annotation "mappedBy" d'un côté, comme pour une association One-to-Many. 
      * Une table de jointure sera automatiquement générée.
      */
-    /* @ManyToMany
+    @ManyToMany
     List<Tableau> oeuvres = new LinkedList<>();
-    */
+    
+    @ManyToOne
+    private Galerie organisateur;
+    
+    @OneToMany(mappedBy = "lieuDeVente")
+    private List<Transaction> ventes = new LinkedList();
     
     /*
      * On peut également préciser davantage les caractéristiques de la table de jointure si nécessaire par l'annotation @JoinTable.
      */
-    @ManyToMany
+    /*@ManyToMany
     @JoinTable(name="expo_tableau",
         joinColumns = 
                 @JoinColumn(name = "exposition_id", referencedColumnName="id"),
         inverseJoinColumns = 
                 @JoinColumn(name = "tableau_id",  referencedColumnName="id")
     )            
-    List<Tableau> oeuvres = new LinkedList<>();
+    List<Tableau> oeuvres = new LinkedList<>();*/
 }
