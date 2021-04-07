@@ -17,9 +17,9 @@ public class Tableau {
     @Column
     private String support;
     @Column
-    private int largeur;
+    private Integer largeur;
     @Column
-    private int hauteur;
+    private Integer hauteur;
     
     @Column
     @NonNull

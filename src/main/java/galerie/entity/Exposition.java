@@ -43,7 +43,7 @@ public class Exposition {
      * Calculer le chiffre d'affaires pour une exposition
      * @return le chiffre d'affaires de cette exposition
      */
-    float chiffreAffaire() {
+    public float chiffreAffaire() {
     	float ca = 0F;
     	for (Transaction transaction : ventes) {
     		ca += transaction.getPrixVente();

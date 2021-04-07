@@ -33,6 +33,7 @@ public class Galerie {
     public float CAannuel(Integer annee) {
     	float caAnnuel = 0;
 		for (Exposition exposition : evenements) {
+			System.out.println(exposition.getDebut().getYear());
 			if(exposition.getDebut().getYear() == annee) caAnnuel += exposition.chiffreAffaire();
 		}
 		return caAnnuel;

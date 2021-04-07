@@ -13,9 +13,9 @@ public interface ExpositionRepository extends JpaRepository<Exposition, Integer>
      * @param id la clé primaire de l'exposition
      * @return le chiffre d'affaires de cette exposition
      */
-	@Query(value="SELECT SUM(prixVente)"
-			+ "FROM Transaction"
-			+ "WHERE lieuDeVente = :id", nativeQuery=true)
+	@Query(value="SELECT SUM(prix_vente) "
+			+ "FROM Transaction "
+			+ "WHERE lieu_de_vente_id = :id", nativeQuery=true)
     float chiffreAffairePour(Integer id);
     
 }
