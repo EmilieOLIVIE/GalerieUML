@@ -14,15 +14,19 @@ public class Tableau {
     @Id  @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Integer id;
 
+    @Column
+    private String support;
+    @Column
+    private int largeur;
+    @Column
+    private int hauteur;
+    
+    @Column
     @NonNull
     private String titre;
     
-    private String support;
-    private int largeur;
-    private int hauteur;
-    
     @ManyToMany(mappedBy = "oeuvres")
-    List<Exposition> accrochages = new LinkedList<>();
+    List<Exposition> accrochages = new LinkedList<Exposition>();
     
     /*
      * Pour les relations OneToOne (Tableau ⟷ Transaction) on peut choisir également de quel côté on met le "mappedBy". 

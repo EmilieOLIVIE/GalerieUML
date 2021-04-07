@@ -1,6 +1,7 @@
 package galerie.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import galerie.entity.Exposition;
 
@@ -12,6 +13,9 @@ public interface ExpositionRepository extends JpaRepository<Exposition, Integer>
      * @param id la clé primaire de l'exposition
      * @return le chiffre d'affaires de cette exposition
      */
-    //float chiffreAffairePour(Integer id);
+	@Query(value="SELECT SUM(prixVente)"
+			+ "FROM Transaction"
+			+ "WHERE lieuDeVente = :id", nativeQuery=true)
+    float chiffreAffairePour(Integer id);
     
 }

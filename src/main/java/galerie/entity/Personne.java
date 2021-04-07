@@ -23,5 +23,18 @@ public class Personne {
     private String adresse;
     
     @OneToMany(mappedBy = "client")
-    private List<Transaction> achats = new LinkedList();
+    private List<Transaction> achats = new LinkedList<Transaction>();
+    
+    /**
+     * Calculer le budget art pour une personne
+     * @param l'année pour laquelle on souhaite calculer le budget
+     * @return le budget pour l'année
+     */
+    public float budgetArt(Integer annee) {
+    	float budget = 0;
+    	for (Transaction transaction : achats) {
+			if(transaction.getVenduLe().getYear() == annee) budget += transaction.getPrixVente();
+		}
+    	return budget;
+    }
 }

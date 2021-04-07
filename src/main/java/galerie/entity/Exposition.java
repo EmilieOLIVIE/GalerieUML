@@ -31,13 +31,26 @@ public class Exposition {
      * Une table de jointure sera automatiquement générée.
      */
     @ManyToMany
-    List<Tableau> oeuvres = new LinkedList<>();
+    List<Tableau> oeuvres = new LinkedList<Tableau>();
     
     @ManyToOne
     private Galerie organisateur;
     
     @OneToMany(mappedBy = "lieuDeVente")
-    private List<Transaction> ventes = new LinkedList();
+    private List<Transaction> ventes = new LinkedList<Transaction>();
+    
+    /**
+     * Calculer le chiffre d'affaires pour une exposition
+     * @return le chiffre d'affaires de cette exposition
+     */
+    float chiffreAffaire() {
+    	float ca = 0F;
+    	for (Transaction transaction : ventes) {
+    		ca += transaction.getPrixVente();
+		}
+    	return ca;
+    }
+
     
     /*
      * On peut également préciser davantage les caractéristiques de la table de jointure si nécessaire par l'annotation @JoinTable.
