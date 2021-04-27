@@ -1,7 +1,5 @@
 package galerie.entity;
-import java.util.LinkedList;
-import java.util.List;
-
+import java.util.*;
 import javax.persistence.*;
 import lombok.*;
 
@@ -14,28 +12,23 @@ public class Tableau {
     @Id  @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Integer id;
 
-    @Column
-    private String support;
-    @Column
-    private Integer largeur;
-    @Column
-    private Integer hauteur;
-    
-    @Column
     @NonNull
     private String titre;
+
+    private String support;
     
-    @ManyToMany(mappedBy = "oeuvres")
-    List<Exposition> accrochages = new LinkedList<Exposition>();
-    
-    /*
-     * Pour les relations OneToOne (Tableau ⟷ Transaction) on peut choisir également de quel côté on met le "mappedBy". 
-     * Ici ll vaut mieux le mettre dans Tableau, ainsi la clé étrangère sera dans Transaction 
-     * (On met le mappedBy dans la classe qui contient la clé primaire).
-     */
+    private String dimension;
+
     @OneToOne(mappedBy = "oeuvre")
+    @ToString.Exclude
     private Transaction vendu;    
     
     @ManyToOne
-    private Artiste auteur;
+    // Peut-être null
+    Artiste auteur;
+
+    @ToString.Exclude
+    @ManyToMany(mappedBy= "oeuvres")
+    private List<Exposition> accrochages = new LinkedList<>();
+    
 }

@@ -1,7 +1,7 @@
 package galerie.entity;
+import java.time.LocalDate;
 import javax.persistence.*;
 import lombok.*;
-import java.time.LocalDate;
 
 // Un exemple d'entité
 // On utilise Lombok pour auto-générer getter / setter / toString...
@@ -12,19 +12,21 @@ public class Transaction {
     @Id  @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Integer id;
 
-    @Column
     @NonNull
-    private LocalDate venduLe;
-    
-    @Column
-    private float prixVente;
-
+    @ManyToOne
+    private Personne client;
+   
+    @NonNull
     @OneToOne
     private Tableau oeuvre;
     
-    @ManyToOne
-    private Personne client;
-    
+    @NonNull
     @ManyToOne
     private Exposition lieuDeVente;
+    
+    @NonNull
+    private Float prixVente;
+    
+    private LocalDate venduLe = LocalDate.now();
+    
 }

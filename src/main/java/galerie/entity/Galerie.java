@@ -1,7 +1,8 @@
 package galerie.entity;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
-
+import java.time.temporal.ChronoUnit;
 import javax.persistence.*;
 import lombok.*;
 
@@ -17,25 +18,26 @@ public class Galerie {
     @Column(unique=true)
     @NonNull
     private String nom;
-    
-    @Column(unique=true)
+   
     @NonNull
     private String adresse;
     
     @OneToMany(mappedBy = "organisateur")
-    private List<Exposition> evenements = new LinkedList<Exposition>();    
+    List<Exposition> evenements = new LinkedList<>();
     
-    /**
-     * Calculer le chiffre d'affaires de la galerie pour une année donnée
-     * @param l'année pour laquelle on veut calculer le chiffre d'affaires
-     * @return le chiffre d'affaires de cette année
-     */
-    public float CAannuel(Integer annee) {
-    	float caAnnuel = 0;
-		for (Exposition exposition : evenements) {
-			System.out.println(exposition.getDebut().getYear());
-			if(exposition.getDebut().getYear() == annee) caAnnuel += exposition.chiffreAffaire();
-		}
-		return caAnnuel;
+    public float CAannuel(int annee) {
+        float result = 0.0f;
+        for (Exposition evenement : evenements)
+            if (evenement.getDebut().getYear() == annee)
+                result += evenement.CA();
+        return result;
+        // Peut s'écrire en utilisant l'API Stream 
+        // cf. https://www.baeldung.com/java-stream-filter-lambda
+        /*
+        return evenements.stream()
+                .filter( expo -> expo.getDebut().getYear() == annee) // On filtre sur l'annee
+                .map(expo -> expo.CA()) // On garde le CA
+                .reduce(0f, Float::sum); // On additionne
+        */
     }
 }

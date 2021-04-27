@@ -1,21 +1,15 @@
 package galerie.entity;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.persistence.*;
 import lombok.*;
 
-// Un exemple d'entité
-// On utilise Lombok pour auto-générer getter / setter / toString...
-// cf. https://examples.javacodegeeks.com/spring-boot-with-lombok/
-@Getter @Setter @NoArgsConstructor @RequiredArgsConstructor @ToString
+@Getter @Setter @NoArgsConstructor @ToString
 @Entity // Une entité JPA
 public class Artiste extends Personne {
-	@Column
-	@NonNull
     private String biographie;
-	
-	@OneToMany(mappedBy = "auteur")
-	private List<Tableau> oeuvres = new LinkedList<Tableau>();
     
+    @OneToMany(mappedBy="auteur")
+    @ToString.Exclude
+    private List<Tableau> oeuvres = new LinkedList<>();
 }
