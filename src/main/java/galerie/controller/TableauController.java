@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import galerie.dao.TableauRepository;
+import galerie.dao.ArtisteRepository;
+import galerie.entity.Personne;
 import galerie.entity.Tableau;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -24,6 +26,9 @@ public class TableauController {
 
     @Autowired
     private TableauRepository dao;
+    
+    @Autowired 
+    private ArtisteRepository daoA;
 
     /**
      * Affiche toutes les catégories dans la base
@@ -44,7 +49,8 @@ public class TableauController {
      * @return le nom de la vue à afficher ('formulaireTableau.html')
      */
     @GetMapping(path = "add")
-    public String montreLeFormulairePourAjout(@ModelAttribute("tableau") Tableau Tableau) {
+    public String montreLeFormulairePourAjout(@ModelAttribute("tableau") Tableau Tableau, Model model) {
+        model.addAttribute("artistes", daoA.findAll());
         return "formulaireTableau";
     }
 
@@ -64,9 +70,8 @@ public class TableauController {
             // Le code de la catégorie a été initialisé par la BD au moment de l'insertion
             message = "Le Tableau '" + Tableau.getTitre() + "' a été  enregistrée avec la clé: " + Tableau.getId();
         } catch (DataIntegrityViolationException e) {
-            // Les noms sont définis comme 'UNIQUE' 
-            // En cas de doublon, JPA lève une exception de violation de contrainte d'intégrité
-            message = "Erreur : Le Tableau '" + Tableau.getTitre() + "' existe déjà";
+            // En cas d'erreur, JPA lève une exception de violation de contrainte d'intégrité
+            message = "Erreur : Le Tableau '" + Tableau.getTitre() + "' n'a pas pu être ajouté.";
         }
         // RedirectAttributes permet de transmettre des informations lors d'une redirection,
         // Ici on transmet un message de succès ou d'erreur
@@ -90,8 +95,8 @@ public class TableauController {
             dao.delete(Tableau); // Ici on peut avoir une erreur (Si il y a des expositions pour cette Tableau par exemple)
             message = "Le Tableau '" + Tableau.getTitre() + "' a bien été supprimée";
         } catch (DataIntegrityViolationException e) {
-            // violation de contrainte d'intégrité si on essaie de supprimer une Tableau qui a des expositions
-            message = "Erreur : Impossible de supprimer le Tableau '" + Tableau.getTitre() + "', il faut d'abord supprimer ses expositions";
+            // violation de contrainte d'intégrité si on essaie de supprimer une Tableau qui a des transactions et/ou des accrochages
+            message = "Erreur : Impossible de supprimer le Tableau '" + Tableau.getTitre() + "', il faut d'abord supprimer ses transactions et/ou ses accrochages.";
         }
         // RedirectAttributes permet de transmettre des informations lors d'une redirection,
         // Ici on transmet un message de succès ou d'erreur

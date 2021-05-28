@@ -33,7 +33,7 @@
 		<td th:text="${t.titre}"/>
 		<td th:text="${t.support}"/>
 		<td th:text="${t.dimension}"/>
-		<td/> <!--<p th:each="a: ${t.auteur_id}"><span th:text="${a.nom}">Street</span></td> th:text="${t.auteur_id}" -->
+		<td th:text="${t.auteur?.nom} ?: 'Auteur inconnu'">Picasso</td>
 		<td><a th:href="@{delete(id=${t.id})}">Supprimer le tableau n° [[${t.id}]]</a></td>
 		</tr>
 	</table>

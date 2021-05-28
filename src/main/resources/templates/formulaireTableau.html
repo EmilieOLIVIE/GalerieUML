@@ -26,7 +26,10 @@
 		</div>
 		<div class="column">
 			<label for="auteur">Auteur:</label>
-
+            <select th:field="*{auteur}" >
+            	<option value="0">Auteur inconnu</option>
+                <option th:each="a: ${artistes}" th:value="${a.id}" th:text="${a.nom}">Pablo Picasso</option>
+            </select>
 			<label for="support">Support:</label>
 			<input type="text" th:field="*{support}" placeholder="support, ex: Huile de toile" />
 			<label for="dimension">Dimensions:</label>
